@@ -1,0 +1,12 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark px-2">
+  <div class="side-nav-button p-2 me-3 text-light" (click)="SideNavToggle()">
+    <i class="fa-solid {{menuStatus ? 'fa-circle-chevron-left' : 'fa-circle-chevron-right'}}"></i>
+  </div>
+  <a class="navbar-brand px-4" href="#">APP VENTAS</a>
+
+  <div class="navbar-collapse d-flex ml-auto  ">
+    <button class="btn btn-outline-light dropdown-toogle ml-auto" data-bs-toogle="dropdown">
+      Username
+    </button>
+  </div>
+</nav>
