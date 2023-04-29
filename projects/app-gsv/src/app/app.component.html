@@ -1,4 +1,7 @@
-<div class="container-fluid g-0">
+<gsv-login *ngIf="!(validarUser|async)"></gsv-login>
+
+
+<div class="container-fluid g-0" *ngIf="validarUser|async as user">
   <gsv-header (sideNavToggled)="sideNavStatus =$event;"></gsv-header>
   <main>
     <gsv-menu class="" [sideNavStatus]="sideNavStatus" [ngClass]="{'app-side-nav-open':sideNavStatus}"></gsv-menu>
@@ -7,5 +10,3 @@
     </div>
   </main>
 </div>
-
-<!-- <gsv-page-login></gsv-page-login> -->

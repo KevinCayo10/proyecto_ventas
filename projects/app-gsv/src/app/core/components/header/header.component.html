@@ -4,9 +4,14 @@
   </div>
   <a class="navbar-brand px-4" href="#">APP VENTAS</a>
 
-  <div class="navbar-collapse d-flex ml-auto  ">
-    <button class="btn btn-outline-light dropdown-toogle ml-auto" data-bs-toogle="dropdown">
-      Username
+  <div class="navbar-collapse d-flex ml-auto" *ngIf="validarUser|async as user">
+    <a class="nav-link text-light mx-2 ">
+      {{user.email}}
+    </a>
+    <button class="btn btn-outline-light mx-2" (click)="logout()">
+      Logout
     </button>
   </div>
+
+
 </nav>

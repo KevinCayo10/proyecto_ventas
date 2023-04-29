@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { AuthService } from '../login/services/auth.service';
 
 @Component({
   selector: 'gsv-header',
@@ -12,5 +13,12 @@ export class HeaderComponent {
   SideNavToggle() {
     this.menuStatus = !this.menuStatus;
     this.sideNavToggled.emit(this.menuStatus);
+  }
+
+  validarUser = this.authService.getUserLogged();
+  constructor(private authService: AuthService) {}
+
+  logout() {
+    this.authService.logout();
   }
 }
