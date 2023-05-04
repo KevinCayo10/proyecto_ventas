@@ -1,1 +1,24 @@
-<gsv-title></gsv-title>
+<div>
+  <gsv-title></gsv-title>
+</div>
+<div class="mt-5 table-container">
+  <table class="table ">
+    <thead>
+      <tr>
+        <ng-container *ngFor="let column of columns">
+          <th>{{ column.title }}</th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of registros">
+        <ng-container *ngFor="let column of columns">
+          <td>{{ row[column.field] }}
+          </td>
+        </ng-container>
+        <td><button><i class="fa fa-edit"></i></button></td>
+        <td><button><i class="fa fa-trash"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
