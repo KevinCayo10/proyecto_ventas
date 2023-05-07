@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  PAGE_SIZE: 6,
   firebaseConfig: {
     apiKey: 'AIzaSyC_IumrNjqAxWPSGq_-_6EQTpvIaM3Qtq8',
     authDomain: 'crudview-d9469.firebaseapp.com',

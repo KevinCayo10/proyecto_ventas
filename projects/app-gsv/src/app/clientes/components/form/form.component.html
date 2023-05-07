@@ -1,1 +1,34 @@
-<p>form works!</p>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ titulo }}</h5>
+      <button type="button" class="close" (click)="cerrarModal()">
+        <span>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="formulario">
+        <div class="form-group">
+          <label>Nombres Completos</label>
+          <input type="text" class="form-control" formControlName="nombresCompletos">
+        </div>
+        <div class="form-group">
+          <label>Direccion</label>
+          <input type="text" class="form-control" formControlName="direccion">
+        </div>
+        <div class="form-group">
+          <label>Fecha de Nacimiento</label>
+          <input type="text" class="form-control" formControlName="fechaNacimiento">
+        </div>
+        <div class="form-group">
+          <label>Celular</label>
+          <input type="text" class="form-control" formControlName="celular">
+        </div>
+        <div class="text-right">
+          <button class="btn btn-primary" [disabled]="formulario.invalid" (click)="grabar()">Grabar</button>
+          <button class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
