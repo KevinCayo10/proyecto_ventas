@@ -2,31 +2,30 @@
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title">{{ titulo }}</h5>
-      <button type="button" class="close" (click)="cerrarModal()">
-        <span>&times;</span>
-      </button>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
       <form [formGroup]="formulario">
-        <div class="form-group">
-          <label>Nombres Completos</label>
-          <input type="text" class="form-control" formControlName="nombresCompletos">
+        <div class="mb-3">
+          <label for="nombresCompletos" class="form-label">Nombres Completos</label>
+          <input type="text" class="form-control" id="nombresCompletos" formControlName="nombresCompletos">
         </div>
-        <div class="form-group">
-          <label>Direccion</label>
-          <input type="text" class="form-control" formControlName="direccion">
+        <div class="mb-3">
+          <label for="direccion" class="form-label">Dirección</label>
+          <input type="text" class="form-control" id="direccion" formControlName="direccion">
         </div>
-        <div class="form-group">
-          <label>Fecha de Nacimiento</label>
-          <input type="text" class="form-control" formControlName="fechaNacimiento">
+        <div class="mb-3">
+          <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+          <input type="text" class="form-control" id="fechaNacimiento" formControlName="fechaNacimiento">
         </div>
-        <div class="form-group">
-          <label>Celular</label>
-          <input type="text" class="form-control" formControlName="celular">
+        <div class="mb-3">
+          <label for="celular" class="form-label">Celular</label>
+          <input type="text" class="form-control" id="celular" formControlName="celular">
         </div>
-        <div class="text-right">
-          <button class="btn btn-primary" [disabled]="formulario.invalid" (click)="grabar()">Grabar</button>
-          <button class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primary me-2" [disabled]="formulario.invalid"
+            (click)="grabar()">Grabar</button>
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
         </div>
       </form>
     </div>

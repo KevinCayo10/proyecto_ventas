@@ -4,7 +4,7 @@
 
 <gsv-container>
   <perfect-scrollbar>
-    <gsv-table [data]="data" [metaDataColumns]="metaDataColumns"></gsv-table>
+    <gsv-table [data]="data" [metaDataColumns]="metaDataColumns" [title]="title"></gsv-table>
   </perfect-scrollbar>
 
   <gsv-paginator [length]="totalRegistros" (onChangePage)="changePage($event)">

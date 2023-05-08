@@ -11,23 +11,23 @@ export class FormComponent {
   titulo = '';
   formulario!: FormGroup;
 
-  constructor(
-    private referencia: MatDialogRef<FormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    this.titulo = data ? 'EDICION' : 'NUEVO';
+  constructor() {
+    //  this.titulo = data ? 'EDICION' : 'NUEVO';
   }
 
   ngOnInit(): void {
-    this.cargarFormulario();
+    //   this.cargarFormulario();
   }
 
   grabar() {
     const record = this.formulario.value;
-    this.referencia.close(record);
   }
 
-  cargarFormulario() {
+  cargarFormulario() {}
+
+  cerrarModal() {}
+
+  /*cargarFormulario() {
     this.formulario = new FormGroup({
       id: new FormControl(this.data?._id),
       nombresCompletos: new FormControl(
@@ -42,8 +42,5 @@ export class FormComponent {
       celular: new FormControl(this.data?.celular),
     });
   }
-
-  cerrarModal() {
-    this.referencia.close();
-  }
+*/
 }

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { MetaDataColumn } from '../../../shared/interfaces/metadatacolumn.interface';
 import { KeypadButton } from '../../../shared/interfaces/keypadButton.interface';
-
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { FormComponent } from '../../components/form/form.component';
 @Component({
   selector: 'gsv-page-list',
   templateUrl: './page-list.component.html',
@@ -116,6 +117,7 @@ export class PageListComponent {
       celular: '05555555555',
     },
   ];
+  title: string = 'CLIENTES';
 
   metaDataColumns: MetaDataColumn[] = [
     { field: '_id', title: 'ID' },
@@ -167,8 +169,41 @@ export class PageListComponent {
       disableClose: true,
       data: fila,
     };
+  }
+  //   const referencia: MatDialogRef<FormComponent> = this.dialog.open(
+  //     FormComponent,
+  //     opciones
+  //   );
 
-    /*
+  //   referencia.afterClosed().subscribe((response) => {
+  //     if (!response) {
+  //       return;
+  //     }
+  //     if (response.id) {
+  //       const cliente = { ...response };
+  //       const index = this.registros.findIndex(
+  //         (registro) => registro._id === response.id
+  //       );
+  //       if (index !== -1) {
+  //         this.registros[index] = cliente;
+  //       }
+  //       console.log('response.id', response.id, cliente);
+  //       console.log('registro ->', this.registros[response.id], this.registros);
+  //     } else {
+  //       console.log('else');
+  //       const cliente = { ...response };
+  //       this.registros.push(cliente);
+  //     }
+  //   });
+  // }
+
+  // eliminar(id: any) {
+  //   const nuevosRegistros = this.registros.filter(
+  //     (registro) => registro._id !== id
+  //   );
+  //   this.registros = nuevosRegistros;
+  // }
+  /*
     const referencia: MatDialogRef<FormComponent> = this.dialog.open(
       FormComponent,
       opciones
@@ -206,5 +241,4 @@ export class PageListComponent {
  
 
 */
-  }
 }
