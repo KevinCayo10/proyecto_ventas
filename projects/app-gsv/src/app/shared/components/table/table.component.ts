@@ -1,7 +1,9 @@
 import {
   Component,
   ContentChildren,
+  EventEmitter,
   Input,
+  Output,
   QueryList,
   SimpleChanges,
   ViewChild,
@@ -10,6 +12,7 @@ import { MetaDataColumn } from '../../interfaces/metadatacolumn.interface';
 import { MatColumnDef, MatTable } from '@angular/material/table';
 import { FormComponent as formComponentCliente } from '../../../clientes/components/form/form.component';
 import { FormComponent as FormComponentProducto } from '../../../productos/components/form/form.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'gsv-table',
@@ -20,6 +23,9 @@ export class TableComponent {
   @Input() data: any;
   @Input() metaDataColumns!: MetaDataColumn[];
   @Input() title: any;
+  @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onClickEliminar: EventEmitter<any> = new EventEmitter<any>();
+
   formComponentCliente!: formComponentCliente;
   formComponentProducto!: FormComponentProducto;
 
@@ -35,17 +41,15 @@ export class TableComponent {
     }
   }
 
-  abrirFormulario(row: any) {
-    switch (this.title) {
-      case 'CLIENTE':
-        this.formComponentCliente = new formComponentCliente();
-        this.formComponentCliente.cargarFormulario();
-        break;
-      case 'PRODUCTO':
-        break;
+  accionEditar(row: any) {
+    this.onClick.emit(row);
+  }
 
-      default:
-        break;
+  accionEliminar(id: any) {
+    if (confirm('¿Está seguro que desea eliminar este elemento?')) {
+      this.onClickEliminar.emit(id);
+      return;
     }
+    return;
   }
 }

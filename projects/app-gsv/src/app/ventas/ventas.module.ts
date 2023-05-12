@@ -6,8 +6,11 @@ import { PageListComponent } from './pages/page-list/page-list.component';
 import { FormComponent } from './components/form/form.component';
 import { SharedModule } from '../shared/shared.module';
 
+import { SaleTableComponent } from './components/sale-table/sale-table.component';
+
 @NgModule({
-  declarations: [PageListComponent, FormComponent],
+  declarations: [PageListComponent, FormComponent, SaleTableComponent],
   imports: [CommonModule, VentasRoutingModule, SharedModule],
+  exports: [SaleTableComponent],
 })
 export class VentasModule {}

@@ -1,5 +1,18 @@
-import { Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -7,27 +20,21 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })
-export class FormComponent {
+export class FormComponent implements OnInit {
   titulo = '';
+
   formulario!: FormGroup;
 
-  constructor() {
-    //  this.titulo = data ? 'EDICION' : 'NUEVO';
-  }
+  @Input() data!: any;
+  @Output() formularioEnviado: EventEmitter<any> = new EventEmitter();
+  @Output() formularioCerrado: EventEmitter<void> = new EventEmitter<void>();
 
+  constructor() {}
   ngOnInit(): void {
-    //   this.cargarFormulario();
+    this.cargarFormulario();
   }
 
-  grabar() {
-    const record = this.formulario.value;
-  }
-
-  cargarFormulario() {}
-
-  cerrarModal() {}
-
-  /*cargarFormulario() {
+  cargarFormulario() {
     this.formulario = new FormGroup({
       id: new FormControl(this.data?._id),
       nombresCompletos: new FormControl(
@@ -35,12 +42,23 @@ export class FormComponent {
         Validators.required
       ),
       direccion: new FormControl(this.data?.direccion, Validators.required),
-      fechaNacimiento: new FormControl(
-        this.data?.fechaNacimiento,
+      correoElectronico: new FormControl(
+        this.data?.correoElectronico,
         Validators.required
       ),
       celular: new FormControl(this.data?.celular),
     });
   }
-*/
+
+  grabar() {
+    if (this.formulario.valid) {
+      const formData = this.formulario.value;
+      console.log(formData);
+      this.formularioEnviado.emit(formData);
+    }
+  }
+
+  cerrarFormulario() {
+    this.formularioCerrado.emit();
+  }
 }

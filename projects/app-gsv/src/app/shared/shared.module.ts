@@ -9,6 +9,8 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { KeypadButtonComponent } from './components/keypad-button/keypad-button.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     PaginatorComponent,
     KeypadButtonComponent,
     ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
   ],
 })
 export class SharedModule {}

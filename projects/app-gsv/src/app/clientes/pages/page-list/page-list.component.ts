@@ -13,117 +13,72 @@ export class PageListComponent {
   registros: any[] = [
     {
       _id: 1,
-      nombresCompletos: 'Carlos Mayorga',
+      nombresCompletos: 'Juan Pérez',
+      correoElectronico: 'juan.perez@mail.com',
       direccion: 'Av. Quito',
-      fechaNacimiento: '01/01/2001',
-      celular: '0999999999',
+      celular: '0991234567',
     },
     {
       _id: 2,
-      nombresCompletos: 'Jorge Canseco',
-      direccion: 'Av. Ambato',
-      fechaNacimiento: '02/02/2002',
-      celular: '0888888888',
+      nombresCompletos: 'María Gómez',
+      correoElectronico: 'maria.gomez@mail.com',
+      direccion: 'Av. Guayaquil',
+      celular: '0987654321',
     },
     {
       _id: 3,
-      nombresCompletos: 'Bryan Torres',
-      direccion: 'Av. Riobamba',
-      fechaNacimiento: '03/03/2003',
-      celular: '0777777777',
+      nombresCompletos: 'Pedro López',
+      correoElectronico: 'pedro.lopez@mail.com',
+      direccion: 'Av. Cuenca',
+      celular: '0999876543',
     },
     {
       _id: 4,
-      nombresCompletos: 'Andres Nuñez',
-      direccion: 'Av. Cevallos',
-      fechaNacimiento: '04/04/2004',
-      celular: '0666666666',
+      nombresCompletos: 'Ana Ramírez',
+      correoElectronico: 'ana.ramirez@mail.com',
+      direccion: 'Av. Ambato',
+      celular: '0987123456',
     },
     {
       _id: 5,
-      nombresCompletos: 'Maria Oviedo',
-      direccion: 'Av. Quero',
-      fechaNacimiento: '05/05/2005',
-      celular: '05555555555',
+      nombresCompletos: 'Luisa Fernández',
+      correoElectronico: 'luisa.fernandez@mail.com',
+      direccion: 'Av. Riobamba',
+      celular: '0996543210',
     },
     {
       _id: 6,
-      nombresCompletos: 'Carlos Mayorga',
-      direccion: 'Av. Quito',
-      fechaNacimiento: '01/01/2001',
-      celular: '0999999999',
+      nombresCompletos: 'Diego Cevallos',
+      correoElectronico: 'diego.cevallos@mail.com',
+      direccion: 'Av. Loja',
+      celular: '0987654321',
     },
     {
       _id: 7,
-      nombresCompletos: 'Jorge Canseco',
-      direccion: 'Av. Ambato',
-      fechaNacimiento: '02/02/2002',
-      celular: '0888888888',
+      nombresCompletos: 'Sofía Ruiz',
+      correoElectronico: 'sofia.ruiz@mail.com',
+      direccion: 'Av. Ibarra',
+      celular: '0999876543',
     },
     {
       _id: 8,
-      nombresCompletos: 'Bryan Torres',
-      direccion: 'Av. Riobamba',
-      fechaNacimiento: '03/03/2003',
-      celular: '0777777777',
-    },
-    {
-      _id: 9,
-      nombresCompletos: 'Andres Nuñez',
-      direccion: 'Av. Cevallos',
-      fechaNacimiento: '04/04/2004',
-      celular: '0666666666',
-    },
-    {
-      _id: 10,
-      nombresCompletos: 'Maria Oviedo',
-      direccion: 'Av. Quero',
-      fechaNacimiento: '05/05/2005',
-      celular: '05555555555',
-    },
-    {
-      _id: 11,
-      nombresCompletos: 'Carlos Mayorga',
-      direccion: 'Av. Quito',
-      fechaNacimiento: '01/01/2001',
-      celular: '0999999999',
-    },
-    {
-      _id: 12,
-      nombresCompletos: 'Jorge Canseco',
-      direccion: 'Av. Ambato',
-      fechaNacimiento: '02/02/2002',
-      celular: '0888888888',
-    },
-    {
-      _id: 13,
-      nombresCompletos: 'Bryan Torres',
-      direccion: 'Av. Riobamba',
-      fechaNacimiento: '03/03/2003',
-      celular: '0777777777',
-    },
-    {
-      _id: 14,
-      nombresCompletos: 'Andres Nuñez',
-      direccion: 'Av. Cevallos',
-      fechaNacimiento: '04/04/2004',
-      celular: '0666666666',
-    },
-    {
-      _id: 15,
-      nombresCompletos: 'Maria Oviedo',
-      direccion: 'Av. Quero',
-      fechaNacimiento: '05/05/2005',
-      celular: '05555555555',
+      nombresCompletos: 'Carlos Castro',
+      correoElectronico: 'carlos.castro@mail.com',
+      direccion: 'Av. Esmeraldas',
+      celular: '0987123456',
     },
   ];
   title: string = 'CLIENTES';
+  // El formulario es para poder abrir o cerrar el componente form
+  formulario!: boolean;
+
+  fila!: any;
 
   metaDataColumns: MetaDataColumn[] = [
     { field: '_id', title: 'ID' },
     { field: 'nombresCompletos', title: 'NOMBRES' },
+    { field: 'correoElectronico', title: 'CORREO ELECTRÓNICO' },
     { field: 'direccion', title: 'DIRECCION' },
-    { field: 'fechaNacimiento', title: 'FECHA DE NACIMIENTO' },
     { field: 'celular', title: 'CELULAR' },
   ];
 
@@ -148,97 +103,69 @@ export class PageListComponent {
     this.totalRegistros = this.data.length;
     this.changePage(0);
   }
+
   enviarAccion(accion: string) {
     switch (accion) {
       case 'DOWNLOAD':
         break;
       case 'NUEVO':
+        this.formulario = true;
         this.abrirFormulario();
         break;
     }
   }
+
+  accionEditar(row: any) {
+    this.formulario = true;
+    this.abrirFormulario(row);
+  }
+  accionEliminar(id: any) {
+    console.log('Entro a pagelis');
+    const nuevosRegistros = this.registros.filter(
+      (registro) => registro._id !== id
+    );
+    this.registros = nuevosRegistros;
+  }
+
   changePage(page: number) {
     const pageSize = environment.PAGE_SIZE;
     const salto = pageSize * page;
     this.data = this.registros.slice(salto, salto + pageSize);
   }
 
+  grabarFormulario(formData: any) {
+    if (!formData) {
+      this.formulario = false;
+      return;
+    }
+    if (formData.id) {
+      const cliente = { ...formData, _id: formData.id };
+      console.log('Entro al ID');
+      console.log(cliente);
+      const index = this.registros.findIndex(
+        (registro) => registro._id === formData.id
+      );
+      console.log('index');
+      console.log(index);
+      if (index !== -1) {
+        this.registros[index] = cliente;
+      }
+      this.formulario = false;
+    } else {
+      const ultimoRegistro = this.registros.pop();
+      console.log(ultimoRegistro);
+      const id = ultimoRegistro._id + 1;
+      const cliente = { ...formData, _id: id };
+      this.registros.push(cliente);
+      this.formulario = false;
+    }
+  }
+
   abrirFormulario(fila: any = null) {
-    const opciones = {
-      panelClass: 'panel-container',
-      disableClose: true,
-      data: fila,
-    };
-  }
-  //   const referencia: MatDialogRef<FormComponent> = this.dialog.open(
-  //     FormComponent,
-  //     opciones
-  //   );
-
-  //   referencia.afterClosed().subscribe((response) => {
-  //     if (!response) {
-  //       return;
-  //     }
-  //     if (response.id) {
-  //       const cliente = { ...response };
-  //       const index = this.registros.findIndex(
-  //         (registro) => registro._id === response.id
-  //       );
-  //       if (index !== -1) {
-  //         this.registros[index] = cliente;
-  //       }
-  //       console.log('response.id', response.id, cliente);
-  //       console.log('registro ->', this.registros[response.id], this.registros);
-  //     } else {
-  //       console.log('else');
-  //       const cliente = { ...response };
-  //       this.registros.push(cliente);
-  //     }
-  //   });
-  // }
-
-  // eliminar(id: any) {
-  //   const nuevosRegistros = this.registros.filter(
-  //     (registro) => registro._id !== id
-  //   );
-  //   this.registros = nuevosRegistros;
-  // }
-  /*
-    const referencia: MatDialogRef<FormComponent> = this.dialog.open(
-      FormComponent,
-      opciones
-    );
-
-    referencia.afterClosed().subscribe((response) => {
-      if (!response) {
-        return;
-      }
-      if (response.id) {
-        const cliente = { ...response };
-        const index = this.registros.findIndex(
-          (registro) => registro._id === response.id
-        );
-        if (index !== -1) {
-          this.registros[index] = cliente;
-        }
-        console.log('response.id', response.id, cliente);
-        console.log('registro ->', this.registros[response.id], this.registros);
-      } else {
-        console.log('else');
-        const cliente = { ...response };
-        this.registros.push(cliente);
-      }
-    });
+    this.fila = fila;
   }
 
-  eliminar(id: any) {
-    const nuevosRegistros = this.registros.filter(
-      (registro) => registro._id !== id
-    );
-    this.registros = nuevosRegistros;
+  cerrarFormulario() {
+    this.formulario = false;
   }
-  
- 
-
-*/
 }
