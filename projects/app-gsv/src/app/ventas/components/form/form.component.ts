@@ -17,15 +17,18 @@ export class FormComponent implements OnInit {
   @Output() formularioEnviado: EventEmitter<any> = new EventEmitter();
   @Output() formularioCerrado: EventEmitter<void> = new EventEmitter<void>();
   maximo: number = 0;
+  registroSeleccionado!: any;
 
   ngOnInit(): void {
+    console.log(this.data);
     this.cargarFormulario();
   }
 
   cargarFormulario() {
     this.formulario = new FormGroup({
+      // _id: new FormGroup(this.data?._id),
       producto: new FormControl(this.data?.producto, Validators.required),
-      stock: new FormControl(this.data?.stock, Validators.required),
+      cantidad: new FormControl(this.data?.stock, Validators.required),
     });
   }
 
@@ -35,22 +38,28 @@ export class FormComponent implements OnInit {
       this.maximo = 0;
       return;
     }
-    let registroSeleccionado = this.data.find(
+    this.registroSeleccionado = this.data.find(
       (registro: Registro) => registro.producto == productoSeleccionado
     );
 
-    console.log(registroSeleccionado);
-    if (!registroSeleccionado) {
+    if (!this.registroSeleccionado) {
       return;
     } else {
-      console.log(registroSeleccionado.stock);
-      this.maximo = registroSeleccionado.stock;
+      console.log(this.registroSeleccionado.stock);
+      this.maximo = this.registroSeleccionado.stock;
     }
   }
 
   grabar() {
     if (this.formulario.valid) {
-      const formData = this.formulario.value;
+      const formData = {
+        ...this.formulario.value,
+        _id: this.registroSeleccionado._id,
+        stock: this.registroSeleccionado.stock,
+        precio: this.registroSeleccionado.precio,
+        descripcion: this.registroSeleccionado.descripcion,
+      };
+      console.log(formData);
       this.formularioEnviado.emit(formData);
       this.formulario.reset();
     }
@@ -63,6 +72,6 @@ interface Registro {
   _id: number;
   producto: string;
   descripcion: string;
-  stock: string;
-  precio: string;
+  stock: number;
+  precio: number;
 }
