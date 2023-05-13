@@ -13,6 +13,7 @@ import { MatColumnDef, MatTable } from '@angular/material/table';
 import { FormComponent as formComponentCliente } from '../../../clientes/components/form/form.component';
 import { FormComponent as FormComponentProducto } from '../../../productos/components/form/form.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'gsv-table',
@@ -46,10 +47,18 @@ export class TableComponent {
   }
 
   accionEliminar(id: any) {
-    if (confirm('¿Está seguro que desea eliminar este elemento?')) {
-      this.onClickEliminar.emit(id);
-      return;
-    }
-    return;
+    Swal.fire({
+      title: '¿Está seguro que desea eliminar este elemento?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Código para eliminar el elemento
+        this.onClickEliminar.emit(id);
+        return;
+      }
+    });
   }
 }

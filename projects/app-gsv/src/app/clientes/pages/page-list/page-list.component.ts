@@ -4,6 +4,7 @@ import { MetaDataColumn } from '../../../shared/interfaces/metadatacolumn.interf
 import { KeypadButton } from '../../../shared/interfaces/keypadButton.interface';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormComponent } from '../../components/form/form.component';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'gsv-page-list',
   templateUrl: './page-list.component.html',
@@ -151,6 +152,7 @@ export class PageListComponent {
         this.registros[index] = cliente;
       }
       this.formulario = false;
+      this.mostrarMensajeActualizacion();
     } else {
       const ultimoRegistro = this.registros.pop();
       console.log(ultimoRegistro);
@@ -158,6 +160,7 @@ export class PageListComponent {
       const cliente = { ...formData, _id: id };
       this.registros.push(cliente);
       this.formulario = false;
+      this.mostrarMensajeAñadir();
     }
   }
 
@@ -167,5 +170,23 @@ export class PageListComponent {
 
   cerrarFormulario() {
     this.formulario = false;
+  }
+
+  mostrarMensajeActualizacion(): void {
+    Swal.fire({
+      title: 'Registro actulaizado',
+      icon: 'info',
+      timer: 3000,
+      showConfirmButton: false,
+    });
+  }
+
+  mostrarMensajeAñadir(): void {
+    Swal.fire({
+      title: 'Registro añadido',
+      icon: 'info',
+      timer: 3000,
+      showConfirmButton: false,
+    });
   }
 }
