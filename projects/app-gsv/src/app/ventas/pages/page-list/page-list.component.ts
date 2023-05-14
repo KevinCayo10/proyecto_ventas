@@ -5,6 +5,9 @@ import { MetaDataColumn } from '../../../shared/interfaces/metadatacolumn.interf
 import { environment } from '../../../environments/environment';
 import { ProductoService } from '../../../productos/services/producto.service';
 import { Producto } from '../../../productos/models/productos.model';
+import { ClienteService } from '../../../clientes/services/cliente.service';
+import { VendedorService } from '../../../vendedores/services/vendedor.service';
+import { CajaService } from '../../../cajas/services/caja.service';
 
 @Component({
   selector: 'gsv-page-list',
@@ -12,18 +15,10 @@ import { Producto } from '../../../productos/models/productos.model';
   styleUrls: ['./page-list.component.css'],
 })
 export class PageListComponent {
-  registrosProducto: any[] = [
-    {
-      _id: 1,
-      producto: 'Laptop HP 15-dy27wm',
-      descripcion: 'i7 10Gen, 8ram, 15.6, 256ssd',
-      stock: '12',
-      precio: '740',
-    },
-  ];
-
-  registrosCliente!: any;
-
+  //Registros
+  registrosProducto: any[] = [];
+  registrosClientes: any[] = [];
+  registrosVendedores: any[] = [];
   registros: any[] = [];
 
   metaDataColumns: MetaDataColumn[] = [
@@ -33,20 +28,31 @@ export class PageListComponent {
     { field: 'subtotal', title: 'SUBTOTAL' },
   ];
 
-  //  ngOnInit(): void {
-  // this.registrosProducto = this.productoComponent.registros;
-  //this.registrosCliente = this.clienteComponent.registros;
-  //console.log(this.registrosCliente);
-  // }
-
   data: any[] = [];
   totalRegistros = this.data.length;
+  registroUsuarioVenta!: any;
 
-  constructor(private productoService: ProductoService) {
+  constructor(
+    private productoService: ProductoService,
+    private clienteService: ClienteService,
+    private vendedorService: VendedorService,
+    private cajaService: CajaService
+  ) {
     this.cargarRegistroProducto();
     this.cargarRegistroVenta();
+    this.cargarRegistroVendedor();
+    this.cargarRegistroCliente();
   }
-
+  cargarRegistroVendedor() {
+    this.vendedorService.cargarVendedores().subscribe((dataWeb) => {
+      this.registrosVendedores = dataWeb;
+    });
+  }
+  cargarRegistroCliente() {
+    this.clienteService.cargarClientes().subscribe((dataWeb) => {
+      this.registrosClientes = dataWeb;
+    });
+  }
   cargarRegistroProducto() {
     this.productoService.cargarProductos().subscribe((dataWeb) => {
       this.registrosProducto = dataWeb;
@@ -89,6 +95,31 @@ export class PageListComponent {
   actualizarRegistroProducto(id: string, producto: any) {
     this.productoService.actualizarProducto(id, producto).subscribe(() => {
       this.cargarRegistroProducto();
+    });
+  }
+
+  grabarUserRegister(formData: any) {
+    this.registroUsuarioVenta = formData;
+    console.log(this.registroUsuarioVenta);
+  }
+  setVenta() {
+    this.registrarVenta(this.registroUsuarioVenta, this.registros);
+  }
+
+  registrarVenta(userRegister: any, registroVenta: any) {
+    //Obtener el total venta. Sumatoria de todo el subtotal
+    let totalSubtotal = this.registros.reduce((total, registro) => {
+      return total + registro.subtotal;
+    }, 0);
+    console.log(totalSubtotal);
+
+    const caja = {
+      cliente: this.registroUsuarioVenta.cliente,
+      vendedor: this.registroUsuarioVenta.vendedor,
+      total: totalSubtotal,
+    };
+    this.cajaService.registrarCaja(caja).subscribe(() => {
+      this.registros = [];
     });
   }
 }

@@ -1,44 +1,49 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'gsv-form-user',
-  templateUrl: './form-user.component.html',
-  styleUrls: ['./form-user.component.css'],
+  selector: 'gsv-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.css'],
 })
-export class FormUserComponent {
-  @Input() dataCliente!: any;
-  @Input() dataVendedor!: any;
+export class FormComponent {
+  titulo = '';
 
   formulario!: FormGroup;
+
+  @Input() data!: any;
   @Output() formularioEnviado: EventEmitter<any> = new EventEmitter();
   @Output() formularioCerrado: EventEmitter<void> = new EventEmitter<void>();
 
+  constructor() {}
   ngOnInit(): void {
     this.cargarFormulario();
   }
 
   cargarFormulario() {
     this.formulario = new FormGroup({
-      // _id: new FormGroup(this.data?._id),
-      cliente: new FormControl(
-        this.dataCliente?.nombresCompletos,
+      id: new FormControl(this.data?._id),
+      nombresCompletos: new FormControl(
+        this.data?.nombresCompletos,
         Validators.required
       ),
-      vendedor: new FormControl(
-        this.dataVendedor?.nombresCompletos,
+      direccion: new FormControl(this.data?.direccion, Validators.required),
+      fechaIngreso: new FormControl(
+        this.data?.fechaIngreso,
         Validators.required
       ),
+      celular: new FormControl(this.data?.celular),
     });
   }
+
   grabar() {
     if (this.formulario.valid) {
       const formData = this.formulario.value;
       console.log(formData);
       this.formularioEnviado.emit(formData);
-      this.formulario.reset();
     }
   }
+
   cerrarFormulario() {
     this.formularioCerrado.emit();
   }

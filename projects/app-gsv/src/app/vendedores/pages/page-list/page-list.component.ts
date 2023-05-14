@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { MetaDataColumn } from '../../../shared/interfaces/metadatacolumn.interface';
-import { KeypadButton } from '../../../shared/interfaces/keypadButton.interface';
 import Swal from 'sweetalert2';
-import { ProductoService } from '../../services/producto.service';
+import { ClienteService } from '../../../clientes/services/cliente.service';
+import { environment } from '../../../environments/environment';
+import { KeypadButton } from '../../../shared/interfaces/keypadButton.interface';
+import { MetaDataColumn } from '../../../shared/interfaces/metadatacolumn.interface';
+import { VendedorService } from '../../services/vendedor.service';
+
 @Component({
   selector: 'gsv-page-list',
   templateUrl: './page-list.component.html',
@@ -13,62 +15,62 @@ export class PageListComponent {
   registros: any[] = [
     {
       _id: 1,
-      producto: 'Laptop HP 15-dy27wm',
-      descripcion: 'i7 10Gen, 8ram, 15.6, 256ssd',
-      stock: '12',
-      precio: '740',
+      nombresCompletos: 'Juan Pérez',
+      correoElectronico: 'juan.perez@mail.com',
+      direccion: 'Av. Quito',
+      celular: '0991234567',
     },
     {
       _id: 2,
-      producto: 'Laptop Asus VivaBook M415DA',
-      descripcion: 'AMD Ryzen 5, 8ram, 15.6, 256ssd',
-      stock: '5',
-      precio: '700',
+      nombresCompletos: 'María Gómez',
+      correoElectronico: 'maria.gomez@mail.com',
+      direccion: 'Av. Guayaquil',
+      celular: '0987654321',
     },
     {
       _id: 3,
-      producto: 'iPad Apple A223',
-      descripcion: ' 10th Gen, 2022, 256GB',
-      stock: '15',
-      precio: '350',
+      nombresCompletos: 'Pedro López',
+      correoElectronico: 'pedro.lopez@mail.com',
+      direccion: 'Av. Cuenca',
+      celular: '0999876543',
     },
     {
       _id: 4,
-      producto: 'Tablet Amazon Fire 8',
-      descripcion: '10th Gen, 2ram, 8.5, 32GB',
-      stock: '15',
-      precio: '350',
+      nombresCompletos: 'Ana Ramírez',
+      correoElectronico: 'ana.ramirez@mail.com',
+      direccion: 'Av. Ambato',
+      celular: '0987123456',
     },
     {
       _id: 5,
-      producto: 'PC Gamer Xeon 12',
-      descripcion: 'i7 10Gen, 16ram, 256ssd, RTX3060',
-      stock: '15',
-      precio: '1100',
+      nombresCompletos: 'Luisa Fernández',
+      correoElectronico: 'luisa.fernandez@mail.com',
+      direccion: 'Av. Riobamba',
+      celular: '0996543210',
     },
     {
       _id: 6,
-      producto: 'CPU Azus Row 1 ',
-      descripcion: 'i7 12Gen, 32ram,  512ssd, RTX3060',
-      stock: '15',
-      precio: '1350',
+      nombresCompletos: 'Diego Cevallos',
+      correoElectronico: 'diego.cevallos@mail.com',
+      direccion: 'Av. Loja',
+      celular: '0987654321',
     },
     {
       _id: 7,
-      producto: 'Laptop Dell G5',
-      descripcion: 'i7 11Gen, 16ram, 15.6, 512ssd',
-      stock: '15',
-      precio: '990',
+      nombresCompletos: 'Sofía Ruiz',
+      correoElectronico: 'sofia.ruiz@mail.com',
+      direccion: 'Av. Ibarra',
+      celular: '0999876543',
     },
     {
       _id: 8,
-      producto: 'Laptop Legion 5',
-      descripcion: 'i7 12Gen, 8ram, 15.6, 256ssd',
-      stock: '15',
-      precio: '950',
+      nombresCompletos: 'Carlos Castro',
+      correoElectronico: 'carlos.castro@mail.com',
+      direccion: 'Av. Esmeraldas',
+      celular: '0987123456',
     },
   ];
-  title: string = 'PRODUCTOS';
+  title: string = 'CLIENTES';
   // El formulario es para poder abrir o cerrar el componente form
   formulario!: boolean;
 
@@ -76,10 +78,10 @@ export class PageListComponent {
 
   metaDataColumns: MetaDataColumn[] = [
     { field: '_id', title: 'ID' },
-    { field: 'producto', title: 'PRODUCTO' },
-    { field: 'descripcion', title: 'DESCRIPCIÓN' },
-    { field: 'stock', title: 'STOCK' },
-    { field: 'precio', title: 'PRECIO' },
+    { field: 'nombresCompletos', title: 'NOMBRES' },
+    { field: 'fechaIngreso', title: 'FECHA DE INGRESO' },
+    { field: 'direccion', title: 'DIRECCION' },
+    { field: 'celular', title: 'CELULAR' },
   ];
 
   keypadButtons: KeypadButton[] = [
@@ -94,21 +96,21 @@ export class PageListComponent {
   data: any[] = [];
   totalRegistros = this.data.length;
 
-  constructor(private productoService: ProductoService) {
-    this.cargarProductos('');
+  constructor(private vendedorService: VendedorService) {
+    this.cargarVendedores('');
   }
 
-  cargarProductos(buscar: string) {
-    // this.data = this.registros;
-    // this.totalRegistros = this.data.length;
-    // this.changePage(0);
+  cargarVendedores(buscar: string) {
+    /* this.data = this.registros;
+    this.totalRegistros = this.data.length;
+    this.changePage(0);*/
 
-    this.productoService.cargarProductos().subscribe((dataWeb) => {
+    this.vendedorService.cargarVendedores().subscribe((dataWeb) => {
       this.registros = dataWeb;
       if (buscar) {
         console.log(buscar);
         this.registros = this.registros.filter((registro) =>
-          registro.producto.toLowerCase().includes(buscar.toLowerCase())
+          registro.nombresCompletos.toLowerCase().includes(buscar.toLowerCase())
         );
         console.log(this.registros);
       }
@@ -116,11 +118,13 @@ export class PageListComponent {
       this.changePage(0);
     });
   }
+
   changePage(page: number) {
     const pageSize = environment.PAGE_SIZE;
     const salto = pageSize * page;
     this.data = this.registros.slice(salto, salto + pageSize);
   }
+
   enviarAccion(accion: string) {
     switch (accion) {
       case 'DOWNLOAD':
@@ -134,20 +138,19 @@ export class PageListComponent {
 
   accionEditar(row: any) {
     this.formulario = true;
-    console.log(row);
     this.abrirFormulario(row);
   }
 
   accionEliminar(id: any) {
     console.log('Entro a pagelis');
-    this.productoService.eliminarProducto(id).subscribe(() => {
-      this.cargarProductos('');
+    this.vendedorService.eliminarVendedor(id).subscribe(() => {
+      this.cargarVendedores('');
     });
   }
 
   buscarData(searchData: any) {
     console.log(searchData);
-    this.cargarProductos(searchData.terminoBusqueda);
+    this.cargarVendedores(searchData.terminoBusqueda);
   }
 
   grabarFormulario(formData: any) {
@@ -156,20 +159,22 @@ export class PageListComponent {
       return;
     }
     if (formData.id) {
-      const producto = { ...formData, _id: formData.id };
-      this.productoService
-        .actualizarProducto(formData.id, producto)
+      const vendedor = { ...formData };
+      console.log('Entro al ID');
+      console.log(vendedor);
+      this.vendedorService
+        .actualizarVendedor(formData.id, vendedor)
         .subscribe(() => {
-          this.cargarProductos('');
+          this.cargarVendedores('');
           this.formulario = false;
           this.mostrarMensajeActualizacion();
         });
     } else {
-      const producto = { ...formData };
-      this.productoService.registrarProducto(producto).subscribe(() => {
+      const vendedor = { ...formData };
+      this.vendedorService.registrarVendedor(vendedor).subscribe(() => {
         console.log('Dentro regsitrar');
-        console.log(producto);
-        this.cargarProductos('');
+        console.log(vendedor);
+        this.cargarVendedores('');
         this.formulario = false;
         this.mostrarMensajeAñadir();
       });
@@ -177,7 +182,6 @@ export class PageListComponent {
   }
 
   abrirFormulario(fila: any = null) {
-    console.log('entro al abrir formulario producto');
     this.fila = fila;
   }
 

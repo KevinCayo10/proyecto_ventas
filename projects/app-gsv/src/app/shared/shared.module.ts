@@ -11,6 +11,7 @@ import { KeypadButtonComponent } from './components/keypad-button/keypad-button.
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +20,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ContainerComponent,
     PaginatorComponent,
     KeypadButtonComponent,
+    SearchComponent,
   ],
-  imports: [CommonModule, MatTableModule, MatPaginatorModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    MatPaginatorModule,
+  ],
   exports: [
     TitleComponent,
     TableComponent,
@@ -32,6 +39,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
+    SearchComponent,
   ],
 })
 export class SharedModule {}

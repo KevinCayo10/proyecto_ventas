@@ -5,6 +5,7 @@ import { KeypadButton } from '../../../shared/interfaces/keypadButton.interface'
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormComponent } from '../../components/form/form.component';
 import Swal from 'sweetalert2';
+import { ClienteService } from '../../services/cliente.service';
 @Component({
   selector: 'gsv-page-list',
   templateUrl: './page-list.component.html',
@@ -95,14 +96,33 @@ export class PageListComponent {
   data: any[] = [];
   totalRegistros = this.data.length;
 
-  constructor(/*private dialog: MatDialog*/) {
-    this.cargarClientes();
+  constructor(private clienteService: ClienteService) {
+    this.cargarClientes('');
   }
 
-  cargarClientes() {
-    this.data = this.registros;
+  cargarClientes(buscar: string) {
+    /* this.data = this.registros;
     this.totalRegistros = this.data.length;
-    this.changePage(0);
+    this.changePage(0);*/
+
+    this.clienteService.cargarClientes().subscribe((dataWeb) => {
+      this.registros = dataWeb;
+      if (buscar) {
+        console.log(buscar);
+        this.registros = this.registros.filter((registro) =>
+          registro.nombresCompletos.toLowerCase().includes(buscar.toLowerCase())
+        );
+        console.log(this.registros);
+      }
+      this.totalRegistros = this.registros.length;
+      this.changePage(0);
+    });
+  }
+
+  changePage(page: number) {
+    const pageSize = environment.PAGE_SIZE;
+    const salto = pageSize * page;
+    this.data = this.registros.slice(salto, salto + pageSize);
   }
 
   enviarAccion(accion: string) {
@@ -120,18 +140,17 @@ export class PageListComponent {
     this.formulario = true;
     this.abrirFormulario(row);
   }
+
   accionEliminar(id: any) {
     console.log('Entro a pagelis');
-    const nuevosRegistros = this.registros.filter(
-      (registro) => registro._id !== id
-    );
-    this.registros = nuevosRegistros;
+    this.clienteService.eliminarCliente(id).subscribe(() => {
+      this.cargarClientes('');
+    });
   }
 
-  changePage(page: number) {
-    const pageSize = environment.PAGE_SIZE;
-    const salto = pageSize * page;
-    this.data = this.registros.slice(salto, salto + pageSize);
+  buscarData(searchData: any) {
+    console.log(searchData);
+    this.cargarClientes(searchData.terminoBusqueda);
   }
 
   grabarFormulario(formData: any) {
@@ -140,27 +159,25 @@ export class PageListComponent {
       return;
     }
     if (formData.id) {
-      const cliente = { ...formData, _id: formData.id };
+      const cliente = { ...formData };
       console.log('Entro al ID');
       console.log(cliente);
-      const index = this.registros.findIndex(
-        (registro) => registro._id === formData.id
-      );
-      console.log('index');
-      console.log(index);
-      if (index !== -1) {
-        this.registros[index] = cliente;
-      }
-      this.formulario = false;
-      this.mostrarMensajeActualizacion();
+      this.clienteService
+        .actualizarCliente(formData.id, cliente)
+        .subscribe(() => {
+          this.cargarClientes('');
+          this.formulario = false;
+          this.mostrarMensajeActualizacion();
+        });
     } else {
-      const ultimoRegistro = this.registros.pop();
-      console.log(ultimoRegistro);
-      const id = ultimoRegistro._id + 1;
-      const cliente = { ...formData, _id: id };
-      this.registros.push(cliente);
-      this.formulario = false;
-      this.mostrarMensajeAñadir();
+      const cliente = { ...formData };
+      this.clienteService.registrarCliente(cliente).subscribe(() => {
+        console.log('Dentro regsitrar');
+        console.log(cliente);
+        this.cargarClientes('');
+        this.formulario = false;
+        this.mostrarMensajeAñadir();
+      });
     }
   }
 

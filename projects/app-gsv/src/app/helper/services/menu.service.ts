@@ -27,9 +27,21 @@ export class MenuService {
     },
     {
       number: '4',
+      title: 'Vendedor',
+      url: '/vendedor',
+      icon: 'fa-solid fa-user-tie',
+    },
+    {
+      number: '5',
       title: 'Venta',
       url: '/venta',
       icon: 'fa-solid fa-cart-shopping',
+    },
+    {
+      number: '6',
+      title: 'Caja',
+      url: '/caja',
+      icon: 'fas fa-dollar-sign',
     },
   ];
   constructor() {}

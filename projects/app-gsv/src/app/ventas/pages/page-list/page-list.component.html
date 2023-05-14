@@ -1,5 +1,9 @@
-<gsv-title></gsv-title>
-<gsv-form [data]="registrosProducto" (formularioEnviado)="grabarFormulario($event)"></gsv-form>
+<div class="container">
+  <gsv-title></gsv-title>
+  <gsv-form-user [dataCliente]="registrosClientes" [dataVendedor]="registrosVendedores"
+    (formularioEnviado)="grabarUserRegister($event)"></gsv-form-user>
+  <gsv-form [data]="registrosProducto" (formularioEnviado)="grabarFormulario($event)"></gsv-form>
+</div>
 
 <gsv-container>
   <perfect-scrollbar>
@@ -8,4 +12,9 @@
 
   <gsv-paginator [length]=" totalRegistros" (onChangePage)="changePage($event)">
   </gsv-paginator>
+
+  <button class="btn btn-primary" (click)="setVenta()">
+    <i class="fas fa-shopping-cart"></i> Generar Venta
+  </button>
+
 </gsv-container>

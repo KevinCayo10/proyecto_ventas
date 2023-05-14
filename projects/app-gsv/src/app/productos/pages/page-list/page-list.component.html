@@ -1,5 +1,7 @@
 <div>
   <gsv-title></gsv-title>
+  <gsv-search (buscadorEnviado)="buscarData($event)" *ngIf="!formulario">
+  </gsv-search>
 </div>
 
 <gsv-form *ngIf="formulario" (formularioEnviado)="grabarFormulario($event)" (formularioCerrado)="cerrarFormulario()"
