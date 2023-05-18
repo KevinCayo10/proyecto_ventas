@@ -1,24 +1,21 @@
 <div class="container col-md-10">
   <div class="card custom-card">
     <div class="card-body">
-      <form [formGroup]="formulario" (ngSubmit)="grabar()" class="form-container">
-        <div class="form-group">
+      <form [formGroup]="formulario" (ngSubmit)="grabar()" class="form-container d-flex flex-row">
+        <div class="form-group flex-grow-1 me-2">
           <label for="producto">Producto</label>
           <select class="form-control" id="producto" formControlName="producto" (change)="actualizarMaximo()">
             <option value="">Seleccionar producto</option>
             <option *ngFor="let registro of data" [value]="registro.producto">{{ registro.producto }}</option>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group flex-grow-1 me-2">
           <label for="cantidad">Cantidad</label>
           <input type="number" class="form-control" id="cantidad" formControlName="cantidad" min="1" [max]="maximo">
         </div>
-        <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary m-2" [disabled]="formulario.invalid">
-            <i class="fas fa-plus"></i> Añadir
-          </button>
-
-        </div>
+        <button type="submit" class="btn btn-primary m-2" [disabled]="formulario.invalid">
+          <i class="fas fa-plus"></i> Añadir
+        </button>
       </form>
     </div>
   </div>

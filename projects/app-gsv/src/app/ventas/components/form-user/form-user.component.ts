@@ -9,6 +9,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class FormUserComponent {
   @Input() dataCliente!: any;
   @Input() dataVendedor!: any;
+  @Input() validarGenerarVenta!: any;
+
+  validarEnviado = false;
 
   formulario!: FormGroup;
   @Output() formularioEnviado: EventEmitter<any> = new EventEmitter();
@@ -16,6 +19,8 @@ export class FormUserComponent {
 
   ngOnInit(): void {
     this.cargarFormulario();
+    this.validarEnviado = false;
+    console.log(this.validarGenerarVenta);
   }
 
   cargarFormulario() {
@@ -35,11 +40,24 @@ export class FormUserComponent {
     if (this.formulario.valid) {
       const formData = this.formulario.value;
       console.log(formData);
+
+      //valida el envio y se bloquea el boton
+      this.validarEnviado = true;
+
       this.formularioEnviado.emit(formData);
-      this.formulario.reset();
+
+      // Deshabilitar el formulario
+      this.formulario.disable();
     }
   }
+
   cerrarFormulario() {
     this.formularioCerrado.emit();
+  }
+
+  limpiarFormulario() {
+    this.formulario.reset();
+    this.validarEnviado = false;
+    this.formulario.enable();
   }
 }

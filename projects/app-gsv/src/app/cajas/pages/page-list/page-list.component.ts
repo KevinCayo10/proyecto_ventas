@@ -14,6 +14,7 @@ export class PageListComponent {
     // { field: '_id', title: 'ID' },
     { field: 'cliente', title: 'CLIENTE' },
     { field: 'vendedor', title: 'VENDEDOR' },
+    { field: 'fechaCreacion', title: 'FECHA DE CREACION' },
     { field: 'total', title: 'MONTO' },
   ];
 

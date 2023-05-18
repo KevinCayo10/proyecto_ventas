@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageListComponent as ProductoComponent } from '../../../productos/pages/page-list/page-list.component';
 import { PageListComponent as ClienteComponent } from '../../../clientes/pages/page-list/page-list.component';
 import { MetaDataColumn } from '../../../shared/interfaces/metadatacolumn.interface';
@@ -8,6 +8,8 @@ import { Producto } from '../../../productos/models/productos.model';
 import { ClienteService } from '../../../clientes/services/cliente.service';
 import { VendedorService } from '../../../vendedores/services/vendedor.service';
 import { CajaService } from '../../../cajas/services/caja.service';
+import Swal from 'sweetalert2';
+import { FormUserComponent } from '../../components/form-user/form-user.component';
 
 @Component({
   selector: 'gsv-page-list',
@@ -15,11 +17,18 @@ import { CajaService } from '../../../cajas/services/caja.service';
   styleUrls: ['./page-list.component.css'],
 })
 export class PageListComponent {
-  //Registros
+  //Registros array
   registrosProducto: any[] = [];
   registrosClientes: any[] = [];
   registrosVendedores: any[] = [];
   registros: any[] = [];
+
+  //ViewChild
+  @ViewChild('formUserRef', { static: false }) formUserRef!: FormUserComponent;
+
+  //validadores booleanos
+  validarRegistroUser!: boolean; // Sirve para hacer aparecer el form-productos
+  validarRegistroProduct!: boolean;
 
   metaDataColumns: MetaDataColumn[] = [
     // { field: '_id', title: 'ID' },
@@ -42,6 +51,8 @@ export class PageListComponent {
     this.cargarRegistroVenta();
     this.cargarRegistroVendedor();
     this.cargarRegistroCliente();
+    this.validarRegistroUser = false;
+    this.validarRegistroProduct = false;
   }
   cargarRegistroVendedor() {
     this.vendedorService.cargarVendedores().subscribe((dataWeb) => {
@@ -63,6 +74,7 @@ export class PageListComponent {
   cargarRegistroVenta() {
     this.data = this.registros;
     this.totalRegistros = this.data.length;
+    this.validarRegistroProduct = this.totalRegistros > 0 ? true : false;
     this.changePage(0);
   }
 
@@ -87,25 +99,41 @@ export class PageListComponent {
       precio: formData.precio,
     };
     console.log(venta);
+    //metodo para actualizar el stock del producto
     this.actualizarRegistroProducto(formData._id, producto);
+    // se agrega el producto - venta al array estatico: this.registros
     this.registros.push(venta);
+    //se cargar la tabla de ventas de productos
     this.cargarRegistroVenta();
   }
 
+  // actualiza el stock de la tabla producto al agregar un producto
   actualizarRegistroProducto(id: string, producto: any) {
     this.productoService.actualizarProducto(id, producto).subscribe(() => {
       this.cargarRegistroProducto();
     });
   }
 
+  // Aqui se graba los usuarios en un array : this.registroUsuarioVenta y se toma el valor del method grabarUser register del Form
   grabarUserRegister(formData: any) {
     this.registroUsuarioVenta = formData;
+    if (!this.registroUsuarioVenta) {
+      return;
+    }
+    this.validarRegistroUser = true;
     console.log(this.registroUsuarioVenta);
   }
+
+  cambiarEstadoDelValidarRegistro() {
+    this.validarRegistroUser = false;
+    console.log('entro');
+  }
+
   setVenta() {
     this.registrarVenta(this.registroUsuarioVenta, this.registros);
   }
 
+  //Se registra la venta y se guarda en la tabla caja.
   registrarVenta(userRegister: any, registroVenta: any) {
     //Obtener el total venta. Sumatoria de todo el subtotal
     let totalSubtotal = this.registros.reduce((total, registro) => {
@@ -120,6 +148,32 @@ export class PageListComponent {
     };
     this.cajaService.registrarCaja(caja).subscribe(() => {
       this.registros = [];
+      this.cargarRegistroVenta();
+      this.mostrarMensajeVenta(caja);
+      this.cargarRegistroCliente();
+      this.cargarRegistroVendedor();
+      this.limpiarFormulario();
+      this.validarRegistroUser = false;
+    });
+  }
+
+  limpiarFormulario() {
+    if (this.formUserRef) {
+      this.formUserRef.limpiarFormulario();
+    }
+  }
+  //Mensajes:
+  mostrarMensajeVenta(caja: any) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Detalles de la transacción',
+      html: `
+      <strong>Cliente:</strong> ${caja.cliente}<br>
+    <strong>Vendedor:</strong> ${caja.vendedor}<br>
+    <strong>Monto total:</strong> ${caja.total}
+      <p>Revisar en el modulo de caja</p>
+    `,
+      confirmButtonText: 'Aceptar',
     });
   }
 }

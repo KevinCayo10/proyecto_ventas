@@ -1,8 +1,9 @@
 <div class="container col-md-10">
   <div class="card custom-card">
     <div class="card-body">
-      <form [formGroup]="formulario" (ngSubmit)="grabar()" class="form-container">
-        <div class="form-group">
+      <!-- <h4 class="card-title">Register User</h4> -->
+      <form [formGroup]="formulario" (ngSubmit)="grabar()" class="form-container d-flex flex-row align-items-end">
+        <div class="form-group flex-grow-1 me-2">
           <label for="cliente">Cliente</label>
           <select class="form-control" id="cliente" formControlName="cliente">
             <option value="">Seleccionar cliente</option>
@@ -11,7 +12,7 @@
             </option>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group flex-grow-1 me-2">
           <label for="vendedor">Vendedor</label>
           <select class="form-control" id="vendedor" formControlName="vendedor">
             <option value="">Seleccionar Vendedor</option>
@@ -20,12 +21,10 @@
             </option>
           </select>
         </div>
-
-        <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary m-2" [disabled]="formulario.invalid">
-            <i class="fas fa-plus"></i> Añadir
+        <div class="d-flex align-items-end">
+          <button type="submit" class="btn btn-primary m-2" [disabled]="formulario.invalid  || validarEnviado">
+            <i class="fas fa-save"></i> Guardar
           </button>
-
         </div>
       </form>
     </div>
