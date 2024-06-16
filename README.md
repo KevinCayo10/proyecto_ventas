@@ -1,27 +1,36 @@
-# ProjectVentas
+# Sistema de Gestión de Productos Tecnológicos
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
+Este proyecto es un sistema de gestión de productos tecnológicos que permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) para clientes, vendedores, productos, ventas y caja. Está desarrollado con Angular en el frontend, Node.js en el backend, Firebase Auth para la autenticación y MongoDB como base de datos.
 
-## Development server
+## Características Principales
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Gestión de Clientes**: Permite agregar, editar, eliminar y visualizar información de clientes.
+- **Gestión de Vendedores**: Permite agregar, editar, eliminar y visualizar información de vendedores.
+- **Gestión de Productos**: Permite agregar, editar, eliminar y visualizar información de productos tecnológicos.
+- **Gestión de Ventas**: Permite registrar, editar y visualizar ventas.
+- **Gestión de Caja**: Permite registrar ingresos y egresos, así como visualizar el estado de caja.
 
-## Code scaffolding
+## Tecnologías Utilizadas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Frontend**: [Angular](https://angular.io/)
+- **Backend**: [Node.js](https://nodejs.org/)
+- **Base de Datos**: [MongoDB](https://www.mongodb.com/)
+- **Autenticación**: [Firebase Auth](https://firebase.google.com/products/auth)
 
-## Build
+## Construido con 🛠️
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **[Node.js](https://nodejs.org/)**:
+    ![Node Logo](https://miro.medium.com/v2/resize:fit:1400/1*y5YLuOKO5XM7MOzve6XsDQ.png)
+- **[Angular CLI](https://angular.io/cli)**:
+  ![Angular Logo](https://miro.medium.com/v2/resize:fit:1358/0*wuNf24urnMp7ypDp.png)
+- **[MongoDB](https://www.mongodb.com/es)**:
+  ![MongoDB Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/MongoDB_Logo.svg/2560px-MongoDB_Logo.svg.png)
+- **[firebase authentication](https://firebase.google.com/docs/auth)**:
+  ![Firebase Logo](https://miro.medium.com/v2/resize:fit:1080/1*eydB7_tt0nAsO4c-CCFAaw.jpeg)
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Autores ✒️
 
-## Running end-to-end tests
+El proyecto fue desarrollado por:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- **[Kevin Cayo]** - Software Developer - [TuLinkedIn](https://www.linkedin.com/in/kevincayo10)
