@@ -7,8 +7,8 @@ Este proyecto es un sistema de gestión de productos tecnológicos que permite r
 - **Gestión de Clientes**: Permite agregar, editar, eliminar y visualizar información de clientes.
 - **Gestión de Vendedores**: Permite agregar, editar, eliminar y visualizar información de vendedores.
 - **Gestión de Productos**: Permite agregar, editar, eliminar y visualizar información de productos tecnológicos.
-- **Gestión de Ventas**: Permite registrar, editar y visualizar ventas.
-- **Gestión de Caja**: Permite registrar ingresos y egresos, así como visualizar el estado de caja.
+- **Gestión de Ventas**: Permite registrar la venta con los datos del vendedor, cliente y productos
+- **Gestión de Caja**: Visualización de la información de venta
 
 ## Tecnologías Utilizadas
 
